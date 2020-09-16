@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  app:
+    container_name: products-api
+    image: 'hub.docker.com/igaming/products-api:latest'
+    environment:
+      - DB_HOST=dbpostgres
+      - DB_PORT=5432
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dbpostgres
+  dbpostgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"

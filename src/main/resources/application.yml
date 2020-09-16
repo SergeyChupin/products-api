@@ -2,3 +2,13 @@ server:
   error:
     include-message: always
     include-stacktrace: never
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  flyway:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
