@@ -8,6 +8,7 @@ import io.r2dbc.spi.ConnectionFactory;
 import io.restassured.RestAssured;
 import lombok.SneakyThrows;
 import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = IntegrationTest.PostgreSQLConfiguration.class)
@@ -48,11 +50,19 @@ public class IntegrationTest {
     @BeforeEach
     public void setUp() {
         flyway.migrate();
+    }
+
+    @AfterEach
+    public void tearDown() {
         repository.deleteAll().block();
     }
 
-    protected void saveProducts(Product... products) {
-        repository.saveAll(Arrays.asList(products)).collectList().block();
+    protected List<Product> saveProductsToDB(Product... products) {
+        return repository.saveAll(Arrays.asList(products)).collectList().block();
+    }
+
+    protected List<Product> getProductsFromDB() {
+        return repository.findAll().collectList().block();
     }
 
     @SneakyThrows

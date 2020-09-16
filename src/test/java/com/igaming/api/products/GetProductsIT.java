@@ -16,7 +16,7 @@ public class GetProductsIT extends IntegrationTest {
     @Test
     void getAllProducts() {
         // given
-        saveProducts(
+        saveProductsToDB(
             Product.create("Milk", BigDecimal.valueOf(1.12)),
             Product.create("Chocolate", BigDecimal.valueOf(2.3)),
             Product.create("Tea", BigDecimal.valueOf(0.7))
@@ -44,7 +44,7 @@ public class GetProductsIT extends IntegrationTest {
     @Test
     void getTwoSortedProducts() {
         // given
-        saveProducts(
+        saveProductsToDB(
             Product.create("Milk", BigDecimal.valueOf(1.12)),
             Product.create("Chocolate", BigDecimal.valueOf(2.3)),
             Product.create("Tea", BigDecimal.valueOf(0.7))

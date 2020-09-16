@@ -1,0 +1,6 @@
+{
+    "id": "${json-unit.ignore}",
+    "name": "Milk",
+    "price": 1.1,
+    "createdAt": "${json-unit.ignore}"
+}
