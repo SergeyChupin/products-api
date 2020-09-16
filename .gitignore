@@ -23,6 +23,7 @@
 hs_err_pid*
 
 # Project files
+!gradle-wrapper.jar
 .gradle/
 .idea/
 build/
