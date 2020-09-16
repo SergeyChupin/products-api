@@ -1,0 +1,14 @@
+[
+    {
+        "id": "${json-unit.ignore}",
+        "name": "Chocolate",
+        "price": 2.3,
+        "createdAt": "${json-unit.ignore}"
+    },
+    {
+        "id": "${json-unit.ignore}",
+        "name": "Milk",
+        "price": 1.12,
+        "createdAt": "${json-unit.ignore}"
+    }
+]
