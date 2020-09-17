@@ -4,6 +4,8 @@ import com.igaming.api.products.controller.dto.ProductPayload;
 import com.igaming.api.products.domain.Product;
 import com.igaming.api.products.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,6 +24,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.net.URI;
 
 @Validated
 @RestController
@@ -45,8 +49,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public Mono<Product> createProduct(@RequestBody @Valid ProductPayload payload) {
-        return service.saveProduct(payload);
+    public Mono<ResponseEntity<Product>> createProduct(@RequestBody @Valid ProductPayload payload) {
+        return service.createProduct(payload)
+            .map(product ->
+                ResponseEntity.created(URI.create("/api/v1/products/" + product.getId()))
+                    .body(product)
+            );
     }
 
     @PutMapping("/{id}")
@@ -56,6 +64,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> removeProduct(@PathVariable Long id) {
         return service.removeProduct(id);
     }

@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RemoveProductIT extends IntegrationTest {
 
     @Test
-    void updateProduct() {
+    void removeProduct() {
         // given
         Long id = saveProductsToDB(
             Product.create("Milk", BigDecimal.valueOf(1.12))
@@ -29,10 +29,10 @@ public class RemoveProductIT extends IntegrationTest {
             .pathParam("id", id)
             .delete(Endpoints.REMOVE_PRODUCT)
             .then()
-            .statusCode(200);
+            .statusCode(204);
 
         // then
-        assertThat(getProductsFromDB().stream().count()).isEqualTo(0);
+        assertThat(getProductsFromDB().size()).isEqualTo(0);
     }
 
     @Test

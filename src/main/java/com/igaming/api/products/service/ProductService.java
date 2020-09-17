@@ -32,7 +32,7 @@ public class ProductService {
             .switchIfEmpty(Mono.error(new NotFoundProductException(id)));
     }
 
-    public Mono<Product> saveProduct(@NotNull ProductPayload payload) {
+    public Mono<Product> createProduct(@NotNull ProductPayload payload) {
         return repository.save(
             Product.create(payload.getName(), payload.getPrice())
         );

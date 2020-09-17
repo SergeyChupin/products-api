@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.stream.IntStream;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CreateProductIT extends IntegrationTest {
 
@@ -22,7 +23,9 @@ public class CreateProductIT extends IntegrationTest {
             .body(getClassPathFileContent("/test-data/create-product-it/create-product/request.json"))
             .post(Endpoints.CREATE_PRODUCT)
             .then()
-            .statusCode(200)
+            .statusCode(201)
+            .assertThat()
+            .header("Location", response -> equalTo("/api/v1/products/" + response.path("id")))
             .extract()
             .response()
             .getBody()
@@ -45,7 +48,9 @@ public class CreateProductIT extends IntegrationTest {
                 .body(getClassPathFileContent("/test-data/create-product-it/create-product/request.json"))
                 .post(Endpoints.CREATE_PRODUCT)
                 .then()
-                .statusCode(200)
+                .statusCode(201)
+                .assertThat()
+                .header("Location", response -> equalTo("/api/v1/products/" + response.path("id")))
         );
 
         // then
